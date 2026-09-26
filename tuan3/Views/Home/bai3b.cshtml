@@ -1,0 +1,191 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Bài Tập Tuần 07 - Đồng hồ & To-Do List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 30px;
+            background-color: #f4f4f9;
+        }
+
+        .section {
+            background: #fff;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            max-width: 650px;
+        }
+        /* Style Đồng hồ kỹ thuật số */
+        .clock-display {
+            background-color: #000;
+            color: #00ffff;
+            text-align: center;
+            padding: 25px;
+            font-size: 45px;
+            font-family: monospace;
+            letter-spacing: 3px;
+            border-radius: 5px;
+        }
+        /* Style To-Do List */
+        .todo-box {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .todo-header {
+            background-color: #4f5d73;
+            padding: 12px;
+            display: flex;
+        }
+
+            .todo-header input {
+                flex: 1;
+                padding: 10px;
+                border: none;
+                font-size: 16px;
+                outline: none;
+                background-color: #344154;
+                color: white;
+            }
+
+                .todo-header input::placeholder {
+                    color: #a0aab5;
+                }
+
+            .todo-header button {
+                background-color: #1abc9c;
+                color: white;
+                border: none;
+                padding: 0 20px;
+                font-size: 22px;
+                cursor: pointer;
+                font-weight: bold;
+            }
+
+        .todo-item {
+            padding: 12px 15px;
+            border-bottom: 1px solid #eee;
+            background: #fff;
+            font-size: 16px;
+        }
+
+            .todo-item:last-child {
+                border-bottom: none;
+            }
+
+            .todo-item input[type="checkbox"] {
+                margin-right: 10px;
+                transform: scale(1.2);
+            }
+
+        .completed {
+            text-decoration: line-through;
+            color: #999;
+        }
+    </style>
+</head>
+<body>
+
+    <!--bai1-->
+    <div class="section">
+        <h3>1. Sử dụng Javascript để làm đồng hồ kỹ thuật số.</h3>
+        <div id="clock" class="clock-display">00:00:00 AM</div>
+    </div>
+
+   <!--bai2-->
+    <div class="section">
+        <h3>2. Viết ứng dụng TO-DO LIST bằng Javascript</h3>
+        <div class="todo-box">
+            <div class="todo-header">
+                <input type="text" id="taskInput" placeholder="Enter a task...">
+                <button onclick="addTask()">+</button>
+            </div>
+            <div id="taskList">
+                <div class="todo-item">
+                    <input type="checkbox" checked onchange="toggleCheck(this)"> <span class="completed">Việc 1</span>
+                </div>
+                <div class="todo-item">
+                    <input type="checkbox" onchange="toggleCheck(this)"> <span>Việc 2</span>
+                </div>
+                <div class="todo-item">
+                    <input type="checkbox" onchange="toggleCheck(this)"> <span>Việc 3</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script language="Javascript">
+       
+        window.onload = function () {
+            setInterval(updateClock, 1000);
+            updateClock();
+        }
+
+        function updateClock() {
+            var d = new Date();
+            var hours = d.getHours();
+            var minutes = d.getMinutes();
+            var seconds = d.getSeconds();
+            var ampm = hours >= 12 ? 'PM' : 'AM';
+
+            hours = hours % 12;
+            hours = hours ? hours : 12; 
+
+            var strHours = hours < 10 ? "0" + hours : hours;
+            var strMinutes = minutes < 10 ? "0" + minutes : minutes;
+            var strSeconds = seconds < 10 ? "0" + seconds : seconds;
+
+            var timeString = strHours + ":" + strMinutes + ":" + strSeconds + " " + ampm;
+            document.getElementById("clock").innerText = timeString;
+        }
+
+        function addTask() {
+            var input = document.getElementById("taskInput");
+            var taskText = input.value;
+
+            if (taskText.trim() === "") {
+                alert("Vui lòng nhập tên công việc!");
+                return;
+            }
+
+            var taskList = document.getElementById("taskList");
+
+            var newItem = document.createElement("div");
+            newItem.className = "todo-item";
+
+            var checkbox = document.createElement("input");
+            checkbox.type = "checkbox";
+            checkbox.onchange = function () {
+                toggleCheck(this);
+            };
+
+            var span = document.createElement("span");
+            span.innerText = taskText;
+
+            newItem.appendChild(checkbox);
+            newItem.appendChild(span);
+            taskList.appendChild(newItem);
+
+            input.value = ""; 
+        }
+
+        function toggleCheck(checkbox) {
+            var span = checkbox.nextElementSibling;
+            if (checkbox.checked) {
+                span.className = "completed";
+            } else {
+                span.className = "";
+            }
+        }
+    </script>
+</body>
+</html>

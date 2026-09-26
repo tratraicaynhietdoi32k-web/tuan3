@@ -1,0 +1,138 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Bài 3a</title>
+    <style type="text/css">
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        .o-vuong {
+            width: 40px;
+            height: 40px;
+            float: left;
+            margin: 5px;
+            border: 1px solid black;
+            text-align: center;
+            line-height: 40px;
+        }
+    </style>
+</head>
+<body>
+
+    <h3>Bài 1: In số lẻ</h3>
+    Nhập n: <input type="text" id="soN">
+    <input type="button" value="In số lẻ" onClick="inSoLe()">
+    <p id="kqBai1"></p>
+
+    <hr>
+
+    <h3>Bài 2: Đổi màu 10 thẻ div</h3>
+    <input type="button" value="Đổi màu" onClick="doiMauDiv()">
+    <br><br>
+    <div id="d1" class="o-vuong">1</div>
+    <div id="d2" class="o-vuong">2</div>
+    <div id="d3" class="o-vuong">3</div>
+    <div id="d4" class="o-vuong">4</div>
+    <div id="d5" class="o-vuong">5</div>
+    <div id="d6" class="o-vuong">6</div>
+    <div id="d7" class="o-vuong">7</div>
+    <div id="d8" class="o-vuong">8</div>
+    <div id="d9" class="o-vuong">9</div>
+    <div id="d10" class="o-vuong">10</div>
+    <div style="clear: both;"></div>
+
+    <hr>
+
+    <h3>Bài 3: Thay đổi thuộc tính trang web</h3>
+    Màu nền: <input type="text" id="MauNen" value="yellow"><br>
+    Màu chữ: <input type="text" id="MauChu" value="red"><br>
+    Tiêu đề: <input type="text" id="TieuDe" value="Trang Của Tôi"><br>
+    Trạng thái: <input type="text" id="TrangThai" value="Đang xem bài tập..."><br><br>
+    <input type="button" value="Thay Đổi" onClick="doiGiaoDien()">
+
+    <hr>
+
+    <h3>Bài 4: Nút Xanh / Đỏ</h3>
+    <input type="button" value="Xanh" onClick="document.bgColor = 'blue'; document.fgColor = 'white';">
+    <input type="button" value="Đỏ" onClick="document.bgColor = 'red'; document.fgColor = 'white';">
+    <input type="button" value="Mặc định" onClick="document.bgColor = 'white'; document.fgColor = 'black';">
+
+    <hr>
+
+    <h3>Bài 6: Slide Show</h3>
+    <img id="anhSlide" src="@Url.Content("~/Images/hinh1.jpg")" width="400" height="250">
+
+    <hr>
+
+    <h3>Bài 7: Lật hình đơn giản</h3>
+    <table border="1" background="@Url.Content("~/Images/hinh4.jpg")" width="300" height="300" style="background-size: cover;">
+        <tr>
+            <td id="o1" bgcolor="yellow" align="center" onClick="document.getElementById('o1').style.visibility='hidden'">1</td>
+            <td id="o2" bgcolor="green" align="center" onClick="document.getElementById('o2').style.visibility='hidden'">2</td>
+        </tr>
+        <tr>
+            <td id="o3" bgcolor="red" align="center" onClick="document.getElementById('o3').style.visibility='hidden'">3</td>
+            <td id="o4" bgcolor="blue" align="center" onClick="document.getElementById('o4').style.visibility='hidden'">4</td>
+        </tr>
+    </table>
+
+    <script language="Javascript">
+       
+        function inSoLe() {
+            var n = parseInt(document.getElementById("soN").value);
+            var kq = "";
+            for (var i = 1; i <= n; i++) {
+                if (i % 2 != 0) {
+                    kq = kq + i + " ";
+                }
+            }
+            document.getElementById("kqBai1").innerText = kq;
+        }
+
+        function doiMauDiv() {
+            for (var i = 1; i <= 10; i++) {
+                var theDiv = document.getElementById("d" + i);
+                if (i % 2 == 0) {
+                    theDiv.style.backgroundColor = "red";
+                } else {
+                    theDiv.style.backgroundColor = "blue";
+                }
+            }
+        }
+
+        
+        function doiGiaoDien() {
+            document.bgColor = document.getElementById("MauNen").value;
+            document.fgColor = document.getElementById("MauChu").value;
+            document.title = document.getElementById("TieuDe").value;
+            window.status = document.getElementById("TrangThai").value;
+        }
+
+      
+        var arrAnh = new Array(
+            "/Images/hinh1.jpg",
+            "/Images/hinh2.jpg",
+            "/Images/hinh3.jpg",
+            "/Images/hinh4.jpg"
+        );
+        var viTriAnh = 0;
+
+        function chaySlide() {
+            viTriAnh++;
+            if (viTriAnh >= arrAnh.length) {
+                viTriAnh = 0;
+            }
+            document.getElementById("anhSlide").src = arrAnh[viTriAnh];
+        }
+
+        setInterval(chaySlide, 2000);
+    </script>
+</body>
+</html>
